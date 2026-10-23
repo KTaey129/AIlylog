@@ -36,3 +36,22 @@ the tool, and malformed tool input missing a required field.
 
 **Done when:** fed genuinely messy input, it never raises an unhandled exception —
 only valid `WorkoutEntry` JSON or a clean `None`.
+
+## Results
+input:  'did bench today, 3x8 @ 60kg, felt good'
+output: {'exercise': 'bench press', 'sets': 3, 'reps': 8, 'weight_kg': 60.0}
+
+input:  'squats 4 sets of 5 reps bodyweight only'
+output: {'exercise': 'squats', 'sets': 4, 'reps': 5, 'weight_kg': None}
+
+input:  'benchpress 5 sets 5 reps 100 kilos'
+output: {'exercise': 'bench press', 'sets': 5, 'reps': 5, 'weight_kg': 100.0}
+
+input:  'ran 5k in 25 minutes'
+output: {'exercise': 'running', 'sets': 1, 'reps': 1, 'weight_kg': None}
+
+input:  'did some deadlifts, lost count of sets, maybe heavy'
+output: {'exercise': 'deadlift', 'sets': 1, 'reps': 1, 'weight_kg': None}
+
+input:  'curls -3 sets of 10 reps at -5kg'
+output: {'exercise': 'curls', 'sets': 3, 'reps': 10, 'weight_kg': 5.0}

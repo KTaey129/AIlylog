@@ -1,3 +1,7 @@
+# the module-vs-script entry-point idiom, fail-fast on missing config, 
+# test data authored as plain data rather than hardcoded into logic, 
+# serialization round-trip (dict → validated object → dict again
+
 import logging
 import os
 
@@ -31,3 +35,13 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+# Every Python file has a built-in variable called __name__. 
+# Its value depends on how the file got loaded:
+# If you run the file directly (uv run main.py), 
+# Python sets __name__ = "__main__" for that file.
+# If another file imports it (from extractor import extract_workout_entry), 
+# Python sets __name__ to the module's actual name ("extractor") 
+# instead.
+# So if __name__ == "__main__": is really asking: "was I run directly, 
+# or was I imported by something else?" 
+# The main() call only happens in the first case.

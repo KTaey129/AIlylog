@@ -15,10 +15,13 @@ _TOOL_SCHEMA = {
     "name": TOOL_NAME,
     "description": "Record a single structured workout log entry.",
     "input_schema": WorkoutEntry.model_json_schema(),
+    # class may have attributes, methods
 }
 
 
 def _call_claude(client: Anthropic, raw_input: str, error_context: str | None) -> dict | None:
+    # _call_claude is a helper function that wraps the Anthropic API call and handles the tool invocation.  
+    # _ means it's a private function, not intended to be used outside this module. (python convention)
     user_content = raw_input
     if error_context:
         user_content = f"{raw_input}\n\n(Your previous attempt failed: {error_context}. Fix it and try again.)"
@@ -34,6 +37,11 @@ def _call_claude(client: Anthropic, raw_input: str, error_context: str | None) -
     for block in response.content:
         if block.type == "tool_use" and block.name == TOOL_NAME:
             return block.input
+        # what is tagged union/discriminated union? it's a type that can be one of several types, 
+        # but each type has a "tag" that identifies which type it is. 
+        # in this case, block.type is the tag that tells us what kind of block it is. 
+        # if it's a tool_use block, we return the input. if it's not, we ignore it and keep looking.
+
 
     return None
 
